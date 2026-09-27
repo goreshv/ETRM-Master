@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Expo & Mobile builds
+.expo/
+*/.expo/
+dist/
+*/dist/
+web-build/
+*/web-build/
+*.tsbuildinfo
+.metro-health-check*
+
+# Environment & secrets
+.env*.local
+*.pem
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+PulseTrade
+PulseTrade.pub
+*.pub
+id_rsa*
+*.bak
+
+# OS & IDE
+.DS_Store
+*/.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python & Django backend
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.log
+local_settings.py
+db.sqlite3
+*/db.sqlite3
+
+# Archives
+*.tar.gz
+pulse-trade-backend.tar.gz
