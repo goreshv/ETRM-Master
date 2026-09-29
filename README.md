@@ -83,7 +83,7 @@ Scan the displayed QR code with your camera (iOS) or the **Expo Go** app (Androi
 ## 📦 Building for Google Play Store
 
 The application is pre-configured for production deployment on Android:
-- **Package Name**: `com.goresh.etrmmaster`
+- **Package Name**: `com.x24tech.etrmmaster`
 - **Build Tool**: Expo Application Services (`eas-cli`)
 
 ```bash
