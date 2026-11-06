@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -9,7 +9,7 @@ import {
   Poppins_600SemiBold, 
   Poppins_700Bold 
 } from '@expo-google-fonts/poppins';
-import { View, ActivityIndicator, LogBox } from 'react-native';
+import { View, LogBox } from 'react-native';
 
 // Suppress upstream framework deprecation warning from React Native 0.86
 LogBox.ignoreLogs([
@@ -19,48 +19,23 @@ LogBox.ignoreLogs([
 import { store } from './src/store';
 import RootNavigator from './src/navigation/RootNavigator';
 
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
+// Instantly dismiss any native splash so the animated in-app splash renders immediately
+SplashScreen.hideAsync().catch(() => {});
 
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
-
   useEffect(() => {
-    async function prepare() {
-      try {
-        // Pre-load fonts
-        await Font.loadAsync({
-          'Poppins-Regular': Poppins_400Regular,
-          'Poppins-Medium': Poppins_500Medium,
-          'Poppins-SemiBold': Poppins_600SemiBold,
-          'Poppins-Bold': Poppins_700Bold,
-        });
-      } catch (e) {
-        console.warn('Font load error:', e);
-      } finally {
-        setAppIsReady(true);
-        try {
-          await SplashScreen.hideAsync();
-        } catch (_) {}
-      }
-    }
-
-    prepare();
+    // Load fonts asynchronously in background without freezing app startup
+    Font.loadAsync({
+      'Poppins-Regular': Poppins_400Regular,
+      'Poppins-Medium': Poppins_500Medium,
+      'Poppins-SemiBold': Poppins_600SemiBold,
+      'Poppins-Bold': Poppins_700Bold,
+    }).catch(e => console.warn('Font load error:', e));
   }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    try {
-      await SplashScreen.hideAsync();
-    } catch (_) {}
-  }, []);
-
-  if (!appIsReady) {
-    return null;
-  }
 
   return (
     <Provider store={store}>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
         <RootNavigator />
       </View>
     </Provider>
