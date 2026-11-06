@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Provider } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -19,9 +19,6 @@ LogBox.ignoreLogs([
 import { store } from './src/store';
 import RootNavigator from './src/navigation/RootNavigator';
 
-// Instantly dismiss any native splash so the animated in-app splash renders immediately
-SplashScreen.hideAsync().catch(() => {});
-
 export default function App() {
   useEffect(() => {
     // Load fonts asynchronously in background without freezing app startup
@@ -33,9 +30,16 @@ export default function App() {
     }).catch(e => console.warn('Font load error:', e));
   }, []);
 
+  // Dismiss native splash screen the exact moment the root view lays out
+  const onLayoutRootView = useCallback(async () => {
+    try {
+      await SplashScreen.hideAsync();
+    } catch (_) {}
+  }, []);
+
   return (
     <Provider store={store}>
-      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }} onLayout={onLayoutRootView}>
         <RootNavigator />
       </View>
     </Provider>
