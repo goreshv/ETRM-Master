@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USER_STORAGE_KEY = '@etrm_user_profile';
-const BASE_URL = 'https://pulsetrade-backend-cbkt.onrender.com/api/users/';
+const BASE_URL = 'https://etrm-master-backend.onrender.com/api/users/';
 
 const api = axios.create({
   baseURL: BASE_URL,

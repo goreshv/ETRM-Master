@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Production backend URL
-const BASE_URL = 'https://pulsetrade-backend-cbkt.onrender.com/api/trades/';
+const BASE_URL = 'https://etrm-master-backend.onrender.com/api/trades/';
 const TRADES_STORAGE_KEY = '@pulsetrade_local_trades';
 
 const api = axios.create({

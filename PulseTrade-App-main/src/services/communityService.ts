@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LearningTopic } from './learningService';
 
 const COMMUNITY_STORAGE_KEY = '@etrm_community_concepts';
-const BASE_URL = 'https://pulsetrade-backend-cbkt.onrender.com/api/concepts/';
+const BASE_URL = 'https://etrm-master-backend.onrender.com/api/concepts/';
 
 const api = axios.create({
   baseURL: BASE_URL,

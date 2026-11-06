@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://pulsetrade-backend-cbkt.onrender.com', // Production backend URL
+  baseURL: 'https://etrm-master-backend.onrender.com', // Production backend URL
   headers: {
     'Content-Type': 'application/json',
   },
