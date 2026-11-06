@@ -2596,6 +2596,631 @@ export const quizQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: "Regulators require firms to report large positions to prevent market cornering."
   }
+,
+  {
+  "id": "f11",
+  "category": "Foundations",
+  "question": "Which department in a commodity trading firm is primarily responsible for calculating daily MTM P&L and enforcing risk limits?",
+  "options": [
+    "Front Office",
+    "Middle Office (Risk)",
+    "Back Office (Settlements)",
+    "Human Resources"
+  ],
+  "correctAnswer": 1,
+  "explanation": "The Middle Office monitors risk, calculates daily Mark-to-Market (MTM) P&L, and ensures traders operate strictly within approved limits."
+},
+  {
+  "id": "f12",
+  "category": "Foundations",
+  "question": "In ETRM terminology, what is a \"Book\" (or Trading Portfolio)?",
+  "options": [
+    "A printed paper manual for desk traders",
+    "A logical container used to group and monitor positions, trades, and P&L by desk or strategy",
+    "A directory of registered energy pipelines",
+    "A legal document registered with corporate regulators"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A Book is a logical grouping in an ETRM system that aggregates deals, physical flows, and derivatives for a specific trader, desk, or strategy."
+},
+  {
+  "id": "f13",
+  "category": "Foundations",
+  "question": "What is the fundamental difference between Fixed Price and Index Price contracts?",
+  "options": [
+    "Fixed price changes every hour while index price remains flat",
+    "Fixed price specifies an exact dollar value, while index price floats against a published benchmark",
+    "Fixed price applies only to power while index applies to oil",
+    "There is no difference in commodity trading"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A fixed price contract agrees on a specific rate (e.g. .00/bbl), whereas an index price floats against an external benchmark like Brent, WTI, or Henry Hub."
+},
+  {
+  "id": "f14",
+  "category": "Foundations",
+  "question": "What is a Forward Curve in commodity trading?",
+  "options": [
+    "A visual map of curved pipeline bends",
+    "A curve showing market prices for delivery across future contract months",
+    "A graph of historical oil production over 50 years",
+    "The rate of vessel acceleration at sea"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A Forward Curve plots market prices for a commodity across a sequence of future settlement/delivery tenors, essential for Mark-to-Market valuation."
+},
+  {
+  "id": "f15",
+  "category": "Foundations",
+  "question": "What is Mark-to-Market (MTM)?",
+  "options": [
+    "Physical inspection of cargo meters at discharge",
+    "Valuing open contracts against current market replacement prices to calculate unrealized gain/loss",
+    "Marking tanker hulls with regulatory safety symbols",
+    "Printing official exchange transaction receipts"
+  ],
+  "correctAnswer": 1,
+  "explanation": "MTM revalues all open trading positions using prevailing forward curves, measuring true economic exposure and unrealized profit or loss."
+},
+  {
+  "id": "f16",
+  "category": "Foundations",
+  "question": "What does \"Basis Risk\" mean in commodity hedging?",
+  "options": [
+    "The risk that software database indexes crash",
+    "The risk that local physical cash prices move differently than the futures contract used for hedging",
+    "The risk that currency exchange rates fluctuate",
+    "The risk that pipeline pressure drops below atmospheric levels"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Basis risk arises when the correlation between the physical commodity price at a specific delivery location and the benchmark futures contract changes unexpectedly."
+},
+  {
+  "id": "f17",
+  "category": "Foundations",
+  "question": "Which of the following describes an \"Open Position\"?",
+  "options": [
+    "A completed trade where payment has settled",
+    "A position that has not yet been offset or physically delivered, leaving exposure to price fluctuations",
+    "A pipeline valve that is currently flowing gas",
+    "An exchange order that was cancelled before execution"
+  ],
+  "correctAnswer": 1,
+  "explanation": "An open position has net exposure to market price fluctuations because it has not been closed out with an offsetting trade or fulfilled through delivery."
+},
+  {
+  "id": "f18",
+  "category": "Foundations",
+  "question": "What is the role of an exchange Clearinghouse (such as CME Clearing or ICE Clear)?",
+  "options": [
+    "Setting retail fuel pump taxes for municipalities",
+    "Acting as the central buyer to every seller and seller to every buyer, virtually eliminating bilateral default risk",
+    "Physically delivering crude oil barrels to residential consumers",
+    "Publishing daily meteorological weather models"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Clearinghouses novate trades to become central counterparty, collecting initial and variation margins to protect the market from counterparty default."
+},
+  {
+  "id": "f19",
+  "category": "Foundations",
+  "question": "In the energy supply chain, what is \"Midstream\"?",
+  "options": [
+    "Wellhead exploration and reservoir drilling",
+    "Transportation, pipeline transmission, bulk storage, and cryogenic processing",
+    "Refining crude oil into consumer gasoline at a service station",
+    "Residential electricity metering and bill distribution"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Midstream encompasses the logistics segment: transporting, storing, and processing commodities between upstream production and downstream consumption."
+},
+  {
+  "id": "f20",
+  "category": "Foundations",
+  "question": "What is a Master Agreement (such as ISDA, NAESB, or EFET)?",
+  "options": [
+    "An operating system software agreement",
+    "A standardized umbrella contract setting general credit, legal, netting, and default terms for bilateral trades",
+    "A patent certificate for refinery cracking catalysts",
+    "An employment contract for chief energy risk officers"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Master Agreements govern bilateral OTC trading relationships, establishing legal terms, definitions, payment netting, credit collateral, and default procedures."
+},
+  {
+  "id": "pm11",
+  "category": "Physical Markets",
+  "question": "What is \"Laytime\" in maritime charter party agreements?",
+  "options": [
+    "The time crew members are permitted to sleep on board",
+    "The agreed amount of time allowed to load or discharge cargo before demurrage penalties begin",
+    "The time required to navigate across the Panama Canal",
+    "The duration a vessel sits idle in a shipyard for maintenance"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Laytime is the contractually specified duration allowed for charterers to load or discharge a vessel without incurring extra charges."
+},
+  {
+  "id": "pm12",
+  "category": "Physical Markets",
+  "question": "What is a \"Notice of Readiness\" (NOR)?",
+  "options": [
+    "An emergency maritime distress signal",
+    "An official document tendered by the ship master certifying the vessel has arrived and is ready to load/discharge",
+    "A customs clearance stamp required for refined product exports",
+    "A notification sent to pipeline controllers to open terminal valves"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Tendering NOR notifies the terminal charterer that the tanker has physically arrived at the port/berth and is prepared in all respects to handle cargo."
+},
+  {
+  "id": "pm13",
+  "category": "Physical Markets",
+  "question": "What is the key difference between FOB (Free on Board) and CIF (Cost, Insurance & Freight)?",
+  "options": [
+    "FOB seller pays freight to destination; CIF buyer pays freight",
+    "Under FOB the buyer arranges and pays for shipping/insurance; under CIF the seller arranges and pays for freight and insurance to the destination port",
+    "FOB applies only to rail transport; CIF applies only to pipelines",
+    "There is no difference in risk or title transfer points"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Under FOB, the buyer arranges shipping and absorbs maritime risk once loaded. Under CIF, the seller pays for ocean freight and marine transit insurance to the destination port."
+},
+  {
+  "id": "pm14",
+  "category": "Physical Markets",
+  "question": "Why is the Bill of Lading (B/L) date so critical in physical commodity trading?",
+  "options": [
+    "It determines the vessel captain's retirement bonus",
+    "It frequently defines the pricing period window, title transfer date, and invoice payment due date",
+    "It sets the currency exchange conversion rate for the subsequent year",
+    "It is only used for local maritime harbor pilot licensing"
+  ],
+  "correctAnswer": 1,
+  "explanation": "The B/L date serves as legal proof of shipment, commonly triggering the contract pricing formula window (e.g., 5-day average around B/L date) and settlement due date."
+},
+  {
+  "id": "pm15",
+  "category": "Physical Markets",
+  "question": "In pipeline operations, what is \"Linepack\"?",
+  "options": [
+    "The insulating wrap placed around underground steel pipelines",
+    "The volume of compressed natural gas maintained within the pipeline network to maintain operating pressure",
+    "The maintenance schedule for replacing pipeline compressor impellers",
+    "The packing material used in shipping container boxes"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Linepack is the physical inventory of pressurized gas stored inside the transmission pipeline itself, acting as a short-term buffer against demand fluctuations."
+},
+  {
+  "id": "pm16",
+  "category": "Physical Markets",
+  "question": "What is \"Capacity Release\" on interstate natural gas pipelines?",
+  "options": [
+    "Venting excess pipeline gas into the atmosphere during overpressure events",
+    "The mechanism allowing shippers with firm transport capacity rights to temporarily sublease it to other parties",
+    "Constructing wider diameter pipelines across state borders",
+    "The permanent abandonment of older gathering pipeline networks"
+  ],
+  "correctAnswer": 1,
+  "explanation": "FERC regulations allow firm capacity holders who do not need their pipeline space on a given day to release/sublet it to other shippers in the capacity release market."
+},
+  {
+  "id": "pm17",
+  "category": "Physical Markets",
+  "question": "What is Locational Marginal Pricing (LMP) in competitive power grids?",
+  "options": [
+    "A single nationwide electricity price fixed by federal legislation",
+    "A pricing model reflecting the marginal cost of supplying the next megawatt-hour at a specific bus/node, accounting for energy, losses, and congestion",
+    "The retail electricity price billed to residential apartment tenants",
+    "The fuel cost of running coal-fired peaker plants"
+  ],
+  "correctAnswer": 1,
+  "explanation": "LMP determines the price of wholesale electric power at specific locations (nodes/buses) across the grid, reflecting local transmission congestion and electrical line losses."
+},
+  {
+  "id": "pm18",
+  "category": "Physical Markets",
+  "question": "What is a \"Spark Spread\" in power market analytics?",
+  "options": [
+    "The visible electric arc emitted when high-voltage transformers disconnect",
+    "The theoretical margin between the wholesale price of electricity and the cost of natural gas fuel needed to produce it",
+    "The difference between Day-Ahead and Intraday electricity prices",
+    "The tariff charged by power distributors to install transmission lines"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Spark Spread represents the gross margin of a gas-fired power generator: Electricity Price - (Gas Price * Heat Rate). For coal plants, it is called a \"Dark Spread\"."
+},
+  {
+  "id": "pm19",
+  "category": "Physical Markets",
+  "question": "What is \"Boil-off Gas\" (BOG) in LNG shipping logistics?",
+  "options": [
+    "Gas vaporized intentionally to power kitchen facilities on board tankers",
+    "Ambient heat ingress causing cryogenic LNG (-162°C) to slowly vaporize during maritime transit",
+    "Gas vented into the atmosphere to lighten ship weight in shallow waters",
+    "A chemical contaminant removed during natural gas sweetening"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Because LNG is stored at -162°C, minor thermal heat leakage into cargo tanks continuously boils off small percentages of liquid into gas, which modern vessels use as propulsion fuel."
+},
+  {
+  "id": "pm20",
+  "category": "Physical Markets",
+  "question": "What is an \"Operational Balancing Agreement\" (OBA) between pipeline operators and interconnecting facilities?",
+  "options": [
+    "An agreement to split corporate profits equally between pipeline firms",
+    "A contract where the pipeline and interconnecting party agree to manage operational physical flow differences on paper to avoid immediate commercial balancing penalties",
+    "A regulatory requirement forbidding pipeline maintenance during winter months",
+    "A financial swap used to balance equity stock prices"
+  ],
+  "correctAnswer": 1,
+  "explanation": "An OBA accounts for daily variances between scheduled nominations and actual physical meter flows at an interconnect point, preventing shippers from incurring individual daily imbalance penalties."
+},
+  {
+  "id": "risk11",
+  "category": "Risk,Valuations & PnL",
+  "question": "What does \"Delta\" represent in commodity derivatives risk management?",
+  "options": [
+    "The total physical distance between delivery hub and load port",
+    "The rate of change in option value relative to a  move in the underlying commodity price",
+    "The difference between realized P&L and total revenue",
+    "The annual rate of crude oil production decline"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Delta measures the sensitivity of an option or derivative portfolio to small changes in the underlying commodity's market price."
+},
+  {
+  "id": "risk12",
+  "category": "Risk,Valuations & PnL",
+  "question": "What is \"Vega\" in energy options trading?",
+  "options": [
+    "The risk of astronomical solar flares disrupting power distribution",
+    "The sensitivity of option portfolio value to a 1% change in implied market volatility",
+    "The rate of option time decay as expiration approaches",
+    "The risk of counterparty bankruptcy during high interest rate environments"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Vega measures how much an option's price will change when implied volatility increases or decreases by 1 percentage point."
+},
+  {
+  "id": "risk13",
+  "category": "Risk,Valuations & PnL",
+  "question": "If a trading portfolio has a 1-day 95% Value-at-Risk (VaR) of ,000, what does this mathematically mean?",
+  "options": [
+    "The desk is guaranteed to lose exactly ,000 tomorrow",
+    "Under normal market conditions, portfolio daily losses are estimated not to exceed ,000 on 95 out of 100 trading days",
+    "The maximum possible portfolio loss is capped at ,000 by law",
+    "The company must maintain ,000 in physical cash in desk vaults"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A 95% 1-day VaR of ,000 indicates that on 95% of trading days, expected loss will not exceed ,000 under model assumptions (though losses on the worst 5% of days can exceed this)."
+},
+  {
+  "id": "risk14",
+  "category": "Risk,Valuations & PnL",
+  "question": "What is \"P&L Attribution\" (or P&L Explain) in Middle Office reporting?",
+  "options": [
+    "Assigning credit or blame to individual junior analysts for software bugs",
+    "Decomposing total daily P&L into constituent market drivers: delta price moves, curve shape, basis changes, new trades, and time decay",
+    "Converting foreign currency P&L into gold ounces for international tax returns",
+    "Submitting corporate financial statements to federal tax authorities"
+  ],
+  "correctAnswer": 1,
+  "explanation": "P&L Attribution isolates and explains exactly why portfolio value changed (e.g., +k from flat price move, -k from basis widening, -k theta decay)."
+},
+  {
+  "id": "risk15",
+  "category": "Risk,Valuations & PnL",
+  "question": "What is \"Shape Risk\" (or Profile Risk) in electricity trading?",
+  "options": [
+    "The geometrical shape of power transmission towers in mountainous regions",
+    "The risk that actual hourly generation or consumption profiles mismatch standard flat block hedges (such as 5x16 on-peak)",
+    "The structural fatigue observed on wind turbine blades",
+    "The curvature of power forward curves when plotted on 3D computer monitors"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Electricity cannot be stored easily; shape risk occurs when a flat contract block (e.g., 50 MW all 16 hours) fails to match actual hourly consumption peaks and troughs."
+},
+  {
+  "id": "risk16",
+  "category": "Risk,Valuations & PnL",
+  "question": "What is \"Stress Testing\" in an ETRM risk framework?",
+  "options": [
+    "Evaluating how trading floor staff perform under long work shifts",
+    "Simulating portfolio financial impact under extreme historical or hypothetical disaster scenarios (e.g., Winter Storm Uri, 2008 crash)",
+    "Testing high pipeline hydraulic pressures before commissioning",
+    "Measuring server hardware CPU utilization during end-of-day batch runs"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Stress testing evaluates extreme tail risks and vulnerabilities by revaluing the portfolio under severe market crises beyond standard statistical VaR models."
+},
+  {
+  "id": "risk17",
+  "category": "Risk,Valuations & PnL",
+  "question": "What is the primary difference between Realized and Unrealized P&L?",
+  "options": [
+    "Realized is based on opinion while unrealized is based on facts",
+    "Realized P&L arises from completed, settled, or closed trades; Unrealized P&L reflects current paper valuation of open forward positions",
+    "Realized P&L only occurs in equity markets while unrealized applies to energy",
+    "There is no difference in corporate accounting"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Unrealized P&L reflects the paper gain or loss on open positions marked to prevailing forward curves; realized P&L is locked in upon position closure, delivery, or financial settlement."
+},
+  {
+  "id": "risk18",
+  "category": "Risk,Valuations & PnL",
+  "question": "Why does an energy forward curve often experience \"Backwardation\" during periods of severe winter cold snaps?",
+  "options": [
+    "Refineries shut down completely in cold temperatures",
+    "High immediate physical heating demand drives prompt spot prices far higher than forward delivery months",
+    "Exchange computer systems malfunction in sub-zero weather",
+    "Pipelines automatically reduce tariffs during winter seasons"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Extreme immediate cold drives acute current physical demand for heating fuel, creating a prompt price spike relative to future delivery tenors (backwardation)."
+},
+  {
+  "id": "crd11",
+  "category": "Credit,Risk Limits",
+  "question": "What is a Credit Support Annex (CSA) under an ISDA Master Agreement?",
+  "options": [
+    "A legal document that guarantees bank loans to energy refiners",
+    "A document defining the rules and collateral thresholds for posting margin between trading counterparties",
+    "An annex listing approved pipeline shipping routes for physical deliveries",
+    "A certificate proving corporate tax exemption status"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A CSA specifies the collateral terms (cash or government bonds), threshold levels, and valuation frequencies required to secure bilateral OTC derivative exposures."
+},
+  {
+  "id": "crd12",
+  "category": "Credit,Risk Limits",
+  "question": "What is the purpose of \"Potential Future Exposure\" (PFE) in credit risk?",
+  "options": [
+    "Predicting the future stock price of competitor corporations",
+    "Estimating the maximum credit exposure that could arise over a given time horizon at a chosen confidence level due to market price swings",
+    "Measuring future corporate carbon emissions targets",
+    "Calculating long-term inflation forecasts for commercial bank loans"
+  ],
+  "correctAnswer": 1,
+  "explanation": "PFE models potential future credit exposure if market prices move unfavorably prior to contract maturity, preventing credit limit over-allocation."
+},
+  {
+  "id": "crd13",
+  "category": "Credit,Risk Limits",
+  "question": "What triggers a \"Variation Margin\" call in cleared and collateralized energy trading?",
+  "options": [
+    "The calendar changing to a new calendar quarter",
+    "Daily changes in Mark-to-Market contract value that increase credit exposure between the counterparties",
+    "A ship reaching the halfway mark across the Atlantic ocean",
+    "A change in corporate executive leadership"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Variation margin is called daily to true-up Mark-to-Market gains and losses, ensuring neither party builds uncollateralized exposure."
+},
+  {
+  "id": "crd14",
+  "category": "Credit,Risk Limits",
+  "question": "What is \"Payment Netting\" in credit and settlement operations?",
+  "options": [
+    "Fishing with safety nets around offshore drilling platforms",
+    "Combining all mutual cash obligations due on the same day in the same currency between counterparties into a single net settlement transfer",
+    "Paying all corporate supplier bills at year-end in a single bulk transaction",
+    "Deducting state fuel taxes from gross sales revenue"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Payment netting aggregates mutual obligations between two firms into a single net cash payment, dramatically reducing settlement risk and banking transaction costs."
+},
+  {
+  "id": "crd15",
+  "category": "Credit,Risk Limits",
+  "question": "What is a Standby Letter of Credit (SBLC) used for in physical commodity trading?",
+  "options": [
+    "A letter recommending junior traders for promotion",
+    "A financial guarantee issued by a commercial bank ensuring payment to the seller if the buyer defaults",
+    "A customs manifest permitting cargo discharge at foreign ports",
+    "A warranty certificate for high-pressure pipeline steel"
+  ],
+  "correctAnswer": 1,
+  "explanation": "An SBLC issued by a bank acts as third-party credit enhancement, committing the bank to pay the seller if the buyer fails to meet payment obligations."
+},
+  {
+  "id": "pts11",
+  "category": "Post Trade & Settlement",
+  "question": "In trade accounting, what is an \"Accrual\"?",
+  "options": [
+    "A mechanical accumulation of pipeline sludge inside crude oil tanks",
+    "An accounting entry recognizing revenue or expense in the period the physical commodity delivered, before the final invoice is processed",
+    "A penalty fine assessed by maritime coast guards for late vessel berthing",
+    "An interest surcharge on corporate credit lines"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Accrual accounting recognizes revenue and expenses when physical delivery occurs, ensuring accurate monthly financial reporting before cash invoices are finalized."
+},
+  {
+  "id": "pts12",
+  "category": "Post Trade & Settlement",
+  "question": "What is \"3-Way Matching\" in Back Office settlement verification?",
+  "options": [
+    "Matching 3 simultaneous futures contracts on different exchanges",
+    "Comparing the trade contract details, operational delivery tickets (meter/BL), and vendor invoice before releasing payment",
+    "Balancing electric voltage across three physical power phases",
+    "Matching trade buyer, seller, and broker signatures on paper tickets"
+  ],
+  "correctAnswer": 1,
+  "explanation": "3-way matching compares contract price/terms, operational delivery tickets (run-ticket/meter/B-L), and invoice amounts to detect billing discrepancies before payment."
+},
+  {
+  "id": "pts13",
+  "category": "Post Trade & Settlement",
+  "question": "What is a \"Credit Note\" (Credit Memo) issued for in ETRM settlement operations?",
+  "options": [
+    "An award certificate acknowledging high trading sales volume",
+    "A formal financial document reducing an existing invoice amount due to over-billing, quality adjustments, or quantity volume discrepancies",
+    "A bank loan application submitted to finance tanker purchases",
+    "A promissory note issued to corporate shareholders"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A Credit Note adjusts an existing invoice downwards when actual delivered volume was lower than invoiced or when pricing corrections apply."
+},
+  {
+  "id": "pts14",
+  "category": "Post Trade & Settlement",
+  "question": "What does ETRM vs ERP Reconciliation ensure?",
+  "options": [
+    "That trading software algorithms compile without syntax errors",
+    "That trade transaction details, payable/receivable sub-ledger balances, and cash settlements in the ETRM match the enterprise General Ledger (e.g. SAP/Oracle)",
+    "That employee computer workstations run identical operating systems",
+    "That retail pump fuel prices match wholesale refinery costs"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Reconciliation verifies that trading records, revenue, invoices, and cash settlements in the ETRM align precisely with accounting postings in the corporate ERP."
+},
+  {
+  "id": "pts15",
+  "category": "Post Trade & Settlement",
+  "question": "What is \"Month-End Close\" in an energy trading organization?",
+  "options": [
+    "Shutting down physical gas pipelines on the last weekend of every month",
+    "The systematic accounting process of locking trade blotters, finalizing accruals, reconciling bank statements, and producing audited financial statements",
+    "Cancelling all open forward contracts before the calendar month changes",
+    "Conducting mandatory physical stocktakes of office computers"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Month-end close locks financial books for the accounting period, finalizing realized P&L, balancing sub-ledgers against GL, and recording mark-to-market balances."
+},
+  {
+  "id": "ops11",
+  "category": "Operations",
+  "question": "Under standard NAESB natural gas scheduling cycles in North America, what is the \"Timely\" cycle deadline?",
+  "options": [
+    "1:00 PM Central Clock Time on the day prior to gas flow",
+    "6:00 AM on the day of gas flow",
+    "11:59 PM on the last day of the calendar month",
+    "Anytime the shipper chooses without restriction"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Under NAESB standards, the Timely nomination cycle has a deadline of 1:00 PM Central Clock Time (CCT) on the day prior to gas flow."
+},
+  {
+  "id": "ops12",
+  "category": "Operations",
+  "question": "What is an \"Operational Flow Order\" (OFO) issued by a natural gas pipeline?",
+  "options": [
+    "A routine invoice sent to utility customers for pipeline tolls",
+    "A mandatory operational directive requiring shippers to strictly balance receipts and deliveries within tight tolerances to protect pipeline integrity",
+    "A permit allowing construction of new compressor stations",
+    "A discount on transmission rates during low-demand seasons"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Pipelines declare an OFO during extreme cold, heat, or mechanical failures, mandating shippers balance nominations with physical flows or pay severe penalties."
+},
+  {
+  "id": "ops13",
+  "category": "Operations",
+  "question": "In physical crude oil shipping, what is an \"Independent Surveyor\" responsible for?",
+  "options": [
+    "Navigating the ship through congested harbor canals",
+    "Inspecting cargo tanks, measuring volume/temperature, determining BS&W (water/sediment), and issuing official Certificates of Quantity and Quality",
+    "Negotiating spot bunker fuel prices for the voyage",
+    "Auditing shipping company tax returns"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Independent surveyors (e.g. SGS, Intertek, Saybolt) objectively verify cargo volume, temperature, API gravity, and sediment at load and discharge ports."
+},
+  {
+  "id": "ops14",
+  "category": "Operations",
+  "question": "What is \"Vessel Vetting\" (e.g. OCIMF SIRE program) in maritime oil trading operations?",
+  "options": [
+    "Checking that the tanker crew speaks English fluently",
+    "A rigorous safety and technical inspection screening process to ensure tankers meet safety, structural, and environmental standards before chartering",
+    "Checking the vessel's financial credit score with consumer rating agencies",
+    "Washing the vessel hull before entering international waters"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Energy majors vet vessels using SIRE inspection reports to verify technical integrity, crew competence, and safety records before committing cargo."
+},
+  {
+  "id": "ops15",
+  "category": "Operations",
+  "question": "What is the standard \"Gas Day\" definition in North America?",
+  "options": [
+    "Midnight to midnight local city time",
+    "9:00 AM Central Clock Time (CCT) to 9:00 AM CCT the following day",
+    "Sunrise to sunset across each individual state",
+    "8:00 AM Eastern Time to 5:00 PM Eastern Time"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Under NAESB standards, the standard Gas Day commences at 9:00 AM Central Clock Time (CCT) and concludes at 9:00 AM CCT on the following calendar day."
+},
+  {
+  "id": "cmp11",
+  "category": "Compliance",
+  "question": "What is the primary objective of REMIT regulation in European energy markets?",
+  "options": [
+    "Setting maximum retail price caps for household electricity",
+    "Prohibiting insider trading and market manipulation, and mandating transparency in wholesale energy markets",
+    "Regulating the manufacture of electric vehicles across EU nations",
+    "Enforcing carbon tax tariffs on imported electronics"
+  ],
+  "correctAnswer": 1,
+  "explanation": "REMIT (Regulation on Wholesale Energy Market Integrity and Transparency) prohibits insider trading and market manipulation in European power and gas markets."
+},
+  {
+  "id": "cmp12",
+  "category": "Compliance",
+  "question": "In energy compliance and market surveillance, what is \"Wash Trading\"?",
+  "options": [
+    "Cleaning physical crude oil storage tanks before inspection",
+    "Entering offsetting buy and sell transactions at the same time and price with no change in economic risk or beneficial ownership, artificially inflating trading volume",
+    "Laundering foreign currency proceeds from illegal fuel smuggling",
+    "Trading biofuels refined from recycled kitchen grease"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Wash trading is an illegal market manipulation practice where trades are executed without economic substance or market risk to fabricate volume or manipulate benchmarks."
+},
+  {
+  "id": "cmp13",
+  "category": "Compliance",
+  "question": "What is \"Spoofing\" in electronic commodity order books?",
+  "options": [
+    "Impersonating another trader's voice on telephone squawk boxes",
+    "Submitting non-bona fide orders that the trader intends to cancel before execution to create a false impression of market demand or supply",
+    "Sending phishing emails to pipeline scheduling operators",
+    "Altering the GPS transponder coordinates of a crude oil tanker"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Spoofing involves placing large algorithmic orders with the intent to cancel before execution, artificially moving prices to benefit trades on the other side of the book."
+},
+  {
+  "id": "cmp14",
+  "category": "Compliance",
+  "question": "Under the US Dodd-Frank Act, what is a \"Swap Data Repository\" (SDR)?",
+  "options": [
+    "An underground storage vault for confidential paper contracts",
+    "A centralized registered facility that electronically collects and maintains records of swap transactions for regulatory transparency",
+    "A backup hard drive installed in desk traders' computers",
+    "A database storing retail consumer credit card transactions"
+  ],
+  "correctAnswer": 1,
+  "explanation": "SDRs collect and maintain real-time swap records to provide regulators (such as the CFTC) with transparency across derivative markets and monitor systemic risk."
+},
+  {
+  "id": "cmp15",
+  "category": "Compliance",
+  "question": "Why are trading floors required to record trader phone lines and retain instant message chats?",
+  "options": [
+    "To monitor employee productivity and break times",
+    "To comply with regulatory mandates (such as CFTC/FCA/FERC) requiring auditable records for trade reconstruction and anti-manipulation investigations",
+    "To train artificial intelligence voice recognition software models",
+    "To reduce commercial telephone subscription bills"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Regulations mandate comprehensive audio and electronic communications recording to enable regulators and compliance officers to reconstruct trade events and detect misconduct."
+}
 ];
 
 function shuffleArray<T>(array: T[]): T[] {

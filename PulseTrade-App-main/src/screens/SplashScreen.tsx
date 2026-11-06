@@ -19,12 +19,12 @@ const SplashScreen = () => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 1000,
+        duration: 800,
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 1000,
+        duration: 800,
         useNativeDriver: true,
       }),
     ]).start();
@@ -73,12 +73,12 @@ const SplashScreen = () => {
           </View>
         </Animated.View>
 
-        <View className="absolute bottom-16 items-center">
-          <Text className="text-slate-300 font-poppins-medium text-xs">
-            Empowering Energy Professionals
+        <View className="absolute bottom-16 items-center px-6">
+          <Text className="text-slate-400 font-poppins-semibold text-xs tracking-wider uppercase text-center">
+            100% AI-Generated Educational Content
           </Text>
-          <Text className="text-slate-400 font-poppins-medium text-[11px] mt-2">
-            Tap anywhere to continue
+          <Text className="text-slate-300 font-poppins-regular text-[11px] mt-1 text-center">
+            Zero Organisation Data • Academic Simulation
           </Text>
         </View>
       </View>

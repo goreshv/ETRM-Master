@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface LearningTopic {
-  id: string;
-  title: string;
-  category: string;
-  summary: string;
-  content: string;
-  bulletPoints: string[];
-  examples: string[];
-  imageUrl?: string;
-}
+import { LearningTopic } from '../services/learningService';
 
 interface LearningState {
   topics: LearningTopic[];

@@ -50,7 +50,12 @@ We may update this Privacy Policy from time to time to reflect changes in legal 
 
 ---
 
-### 8. Contact Us
+### 8. AI-Generated Educational Content & Organisation Data Disclaimer
+All learning materials, curriculum lessons, market scenarios, quiz questions, and simulated trade records within ETRM Master are strictly AI-generated for educational, simulation, and career training purposes. **No proprietary, internal, or confidential data from any organization, trading firm, or energy company has been used or reproduced.**
+
+---
+
+### 9. Contact Us
 If you have any questions, feedback, or concerns regarding this Privacy Policy or your privacy while using ETRM Master, please contact us at:
 
 - **Developer / Publisher:** x24tech

@@ -1,48 +1,73 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ScreenContainer from '../components/layout/ScreenContainer';
 import LearningCard from '../components/cards/LearningCard';
+import SubmitConceptModal from '../components/common/SubmitConceptModal';
 import { learningService, LearningTopic } from '../services/learningService';
 import { setTopics } from '../store/learningSlice';
 
-const learningCategories = [
+const COMPLETED_TOPICS_KEY = '@completed_topics_list';
+
+const LEARNING_CATEGORIES = [
   'All', 
-  'Foundations', 
+  'Community',
+  'Foundations',
   'Oil',
   'Natural Gas',
   'LNG',
   'Power',
-  'Physical Markets',
+  'Master Data', 
   'Risk,Valuations & PnL',
-  'Credit,Risk Limits', 
+  'Physical Markets',
+  'Credit,Risk Limits',
   'Post Trade & Settlement',
   'Operations',
-  'Compliance'
+  'Compliance',
 ];
 
 const LearningScreen = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
-  const topics = useSelector((state: any) => state.learning.topics);
+  const topics: LearningTopic[] = useSelector((state: any) => state.learning.topics || []);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null);
 
-  useEffect(() => {
-    // If topics haven't been loaded into Redux yet, fetch them
-    if (!topics || topics.length === 0) {
-      const load = async () => {
-        const data = await learningService.getTopics();
-        dispatch(setTopics(data));
-      };
-      load();
+  const loadTopicsAndProgress = async () => {
+    try {
+      const [data, completedRaw] = await Promise.all([
+        learningService.getTopics(),
+        AsyncStorage.getItem(COMPLETED_TOPICS_KEY)
+      ]);
+
+      dispatch(setTopics(data));
+
+      if (completedRaw) {
+        const parsed = JSON.parse(completedRaw);
+        if (Array.isArray(parsed)) {
+          setCompletedIds(parsed);
+          return;
+        }
+      }
+      setCompletedIds([]);
+    } catch (e) {
+      console.warn('Error reloading topics and progress:', e);
     }
-  }, [dispatch, topics]);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTopicsAndProgress();
+    }, [])
+  );
 
   useEffect(() => {
     if (flatListRef.current) {
@@ -50,73 +75,167 @@ const LearningScreen = () => {
     }
   }, [activeCategory, searchQuery]);
 
-  const filteredTopics = (topics || []).filter((topic: LearningTopic) => {
-    const matchesCategory = activeCategory === 'All' || topic.category === activeCategory;
+  // Compute category counts
+  const categoryCounts = useMemo(() => {
+    const counts: { [key: string]: number } = { 
+      All: (topics || []).length,
+      Community: (topics || []).filter(t => t.is_community).length
+    };
+    (topics || []).forEach(t => {
+      counts[t.category] = (counts[t.category] || 0) + 1;
+    });
+    return counts;
+  }, [topics]);
+
+  const filteredTopics = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    if (!query) return matchesCategory;
 
-    const matchesSearch = 
-      topic.title.toLowerCase().includes(query) ||
-      topic.summary.toLowerCase().includes(query) ||
-      topic.content.toLowerCase().includes(query);
+    return (topics || []).filter((topic: LearningTopic) => {
+      let matchesCategory = false;
+      if (activeCategory === 'All') {
+        matchesCategory = true;
+      } else if (activeCategory === 'Community') {
+        matchesCategory = Boolean(topic.is_community);
+      } else {
+        matchesCategory = topic.category === activeCategory;
+      }
 
-    return matchesCategory && matchesSearch;
-  });
+      if (!matchesCategory) return false;
+      if (!query) return true;
+
+      // Safe multi-field search including author name
+      const titleMatch = (topic.title || '').toLowerCase().includes(query);
+      const summaryMatch = (topic.summary || '').toLowerCase().includes(query);
+      const contentMatch = (topic.content || '').toLowerCase().includes(query);
+      const authorMatch = (topic.author_name || '').toLowerCase().includes(query);
+      const takeawaysMatch = (topic.keyTakeaways || []).some(k => (k || '').toLowerCase().includes(query));
+      const sectionMatch = (topic.sections || []).some(s => 
+        (s.heading || '').toLowerCase().includes(query) || 
+        (s.points || []).some(p => (p || '').toLowerCase().includes(query))
+      );
+
+      return titleMatch || summaryMatch || contentMatch || authorMatch || takeawaysMatch || sectionMatch;
+    });
+  }, [topics, activeCategory, searchQuery]);
 
   const renderCategoryTabs = () => (
-    <ScrollView 
-      horizontal 
-      showsHorizontalScrollIndicator={false}
-      className="mb-4 mt-2"
-      contentContainerStyle={{ paddingRight: 20 }}
-    >
-      {learningCategories.map((cat) => (
-        <TouchableOpacity 
-          key={cat}
-          onPress={() => setActiveCategory(cat)}
-          style={{ minWidth: 80, height: 44, alignItems: 'center', justifyContent: 'center' }}
-          className={`px-4 rounded-20 mr-2 border ${
-            activeCategory === cat 
-              ? 'bg-primary border-primary' 
-              : 'bg-white border-slate-100'
-          }`}
-        >
-          <Text className={`font-poppins-semibold ${
-            activeCategory === cat ? 'text-white' : 'text-slate-500'
-          }`}>
-            {cat}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <View style={{ height: 56, marginBottom: 8 }}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 2, paddingVertical: 6, alignItems: 'center' }}
+      >
+        {LEARNING_CATEGORIES.map((cat) => {
+          const count = categoryCounts[cat] || 0;
+          const isActive = activeCategory === cat;
+
+          return (
+            <TouchableOpacity 
+              key={cat}
+              onPress={() => setActiveCategory(cat)}
+              activeOpacity={0.8}
+              style={{
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 14,
+                borderRadius: 20,
+                marginRight: 8,
+                backgroundColor: isActive ? '#1E40FF' : '#FFFFFF',
+                borderColor: isActive ? '#1E40FF' : '#E2E8F0',
+                borderWidth: 1,
+                shadowColor: isActive ? '#1E40FF' : '#000',
+                shadowOffset: { width: 0, height: isActive ? 3 : 1 },
+                shadowOpacity: isActive ? 0.25 : 0.04,
+                shadowRadius: isActive ? 4 : 2,
+                elevation: isActive ? 3 : 1,
+              }}
+              className="flex-row items-center"
+            >
+              {cat === 'Community' && (
+                <Ionicons 
+                  name="people" 
+                  size={13} 
+                  color={isActive ? '#FFFFFF' : '#D97706'} 
+                  style={{ marginRight: 4 }} 
+                />
+              )}
+              <Text className={`font-poppins-semibold text-xs ${
+                isActive ? 'text-white' : 'text-slate-600'
+              }`}>
+                {cat}
+              </Text>
+              {count > 0 && (
+                <View 
+                  style={{
+                    marginLeft: 6,
+                    paddingHorizontal: 6,
+                    paddingVertical: 1,
+                    borderRadius: 10,
+                    backgroundColor: isActive ? 'rgba(255, 255, 255, 0.25)' : '#F1F5F9',
+                  }}
+                >
+                  <Text className={`text-[10px] font-poppins-bold ${
+                    isActive ? 'text-white' : 'text-slate-500'
+                  }`}>
+                    {count}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 
   return (
     <ScreenContainer scrollable={false}>
-      <View className="flex-row items-center justify-between mt-2">
-        <Text className="text-3xl font-poppins-bold text-slate-900">Learning Center</Text>
-        <TouchableOpacity 
-          onPress={() => {
-            setShowSearch(!showSearch);
-            if (showSearch) setSearchQuery('');
-          }}
-          className={`w-10 h-10 rounded-xl items-center justify-center border ${
-            showSearch ? 'bg-primary border-primary' : 'bg-white border-slate-100'
-          }`}
-        >
-          <Ionicons 
-            name={showSearch ? "close" : "search"} 
-            size={20} 
-            color={showSearch ? "white" : "#1E40FF"} 
-          />
-        </TouchableOpacity>
+      {/* Header with Share/Collaborate Button */}
+      <View className="flex-row items-center justify-between mt-2 mb-2">
+        <View>
+          <Text className="text-3xl font-poppins-bold text-slate-900">Learning Center</Text>
+          <Text className="text-slate-400 font-poppins-medium text-xs">
+            {filteredTopics.length} Topics • {completedIds.length} Mastered ✓
+          </Text>
+        </View>
+        <View className="flex-row items-center space-x-2">
+          {/* Collaborate / Share Concept Button */}
+          <TouchableOpacity
+            onPress={() => setShowSubmitModal(true)}
+            className="h-10 px-3 bg-amber-500 rounded-2xl flex-row items-center justify-center mr-2 shadow-sm shadow-amber-500/30"
+            accessibilityLabel="Submit Topic / Q&A"
+          >
+            <Ionicons name="add-circle-outline" size={18} color="white" />
+            <Text className="text-white font-poppins-bold text-xs ml-1.5">Share Q&A</Text>
+          </TouchableOpacity>
+
+          {/* Search Toggle Button */}
+          <TouchableOpacity 
+            onPress={() => {
+              setShowSearch(!showSearch);
+              if (showSearch) setSearchQuery('');
+            }}
+            className={`w-10 h-10 rounded-2xl items-center justify-center border ${
+              showSearch ? 'bg-primary border-primary' : 'bg-white border-slate-100'
+            } shadow-sm`}
+            accessibilityLabel="Toggle Search"
+          >
+            <Ionicons 
+              name={showSearch ? "close" : "search"} 
+              size={18} 
+              color={showSearch ? "white" : "#1E40FF"} 
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
+      {/* Search Input Bar */}
       {showSearch && (
-        <View className="mt-3 mb-2 bg-white rounded-2xl px-4 py-3 border border-slate-200 flex-row items-center">
+        <View className="mb-2 bg-white rounded-2xl px-4 py-3 border border-slate-200 flex-row items-center shadow-sm">
           <Ionicons name="search-outline" size={18} color="#94A3B8" />
           <TextInput
-            placeholder="Search topics, concepts, terms..."
+            placeholder="Search concepts, authors, pricing, pipelines..."
             placeholderTextColor="#94A3B8"
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -137,24 +256,51 @@ const LearningScreen = () => {
         ref={flatListRef}
         data={filteredTopics}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <LearningCard 
-            title={item.title}
-            category={item.category}
-            summary={item.summary}
-            onPress={() => navigation.navigate('LearningDetail', { topicId: item.id })}
-          />
-        )}
+        renderItem={({ item }) => {
+          const isCompleted = completedIds.includes(item.id);
+          return (
+            <LearningCard 
+              title={item.title}
+              category={item.category}
+              summary={item.summary || (item.sections?.[0]?.points?.[0] ?? 'Tap to read comprehensive learning content and real-world examples.')}
+              onPress={() => navigation.navigate('LearningDetail', { topicId: item.id })}
+              isCompleted={isCompleted}
+              authorName={item.author_name}
+              isCommunity={item.is_community}
+            />
+          );
+        }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 130 }}
         ListEmptyComponent={() => (
-          <View className="flex-1 items-center justify-center mt-20">
-            <Ionicons name="book-outline" size={60} color="#CBD5E1" />
-            <Text className="text-slate-400 font-poppins-medium mt-4">
-              {searchQuery ? `No topics matching "${searchQuery}"` : 'No topics found in this category'}
+          <View className="flex-1 items-center justify-center mt-14 px-6">
+            <View className="w-16 h-16 rounded-full bg-slate-100 items-center justify-center mb-3">
+              <Ionicons name="book-outline" size={32} color="#94A3B8" />
+            </View>
+            <Text className="text-slate-800 font-poppins-bold text-base text-center">
+              No topics found
             </Text>
+            <Text className="text-slate-400 font-poppins-medium text-xs text-center mt-1">
+              {searchQuery ? `No matching topics for "${searchQuery}"` : 'Be the first to share a concept or Q&A in this section!'}
+            </Text>
+            <TouchableOpacity
+              onPress={() => setShowSubmitModal(true)}
+              className="mt-4 px-4 py-2.5 bg-amber-500 rounded-xl flex-row items-center"
+            >
+              <Ionicons name="add-circle" size={16} color="white" />
+              <Text className="text-white font-poppins-bold text-xs ml-1.5">Share First Q&A</Text>
+            </TouchableOpacity>
           </View>
         )}
+      />
+
+      {/* Community Concept Submission Modal */}
+      <SubmitConceptModal
+        visible={showSubmitModal}
+        onClose={() => setShowSubmitModal(false)}
+        onConceptSubmitted={() => {
+          loadTopicsAndProgress();
+        }}
       />
     </ScreenContainer>
   );

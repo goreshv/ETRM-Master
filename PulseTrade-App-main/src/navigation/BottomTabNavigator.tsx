@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
@@ -13,32 +14,45 @@ import QuizScreen from '../screens/QuizScreen';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const insets = useSafeAreaInsets();
+  
+  // Account for system navigation bar / gesture handle
+  const bottomMargin = Math.max(insets.bottom, Platform.OS === 'ios' ? 16 : 10);
+  const tabHeight = 64;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 25,
-          left: 15,
-          right: 15,
-          elevation: 5,
-          backgroundColor: '#ffffff',
-          borderRadius: 25,
-          height: 70,
-          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
-          paddingTop: 10,
+          bottom: bottomMargin,
+          left: 14,
+          right: 14,
+          elevation: 8,
+          backgroundColor: '#FFFFFF',
+          borderRadius: 24,
+          height: tabHeight,
+          paddingTop: 6,
+          paddingBottom: 6,
+          borderTopWidth: 0,
           shadowColor: '#1E40FF',
           shadowOffset: {
             width: 0,
-            height: 10,
+            height: 6,
           },
-          shadowOpacity: 0.15,
-          shadowRadius: 10,
+          shadowOpacity: 0.12,
+          shadowRadius: 12,
         },
         tabBarActiveTintColor: '#1E40FF',
         tabBarInactiveTintColor: '#94A3B8',
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarItemStyle: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 2,
+        },
+        tabBarIcon: ({ focused, color }) => {
           let iconName: any;
 
           if (route.name === 'Home') {
@@ -56,22 +70,23 @@ const BottomTabNavigator = () => {
           return (
             <View 
               style={{
-                width: 40,
-                height: 34,
+                width: 38,
+                height: 28,
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderRadius: 12,
+                borderRadius: 10,
                 backgroundColor: focused ? '#EFF6FF' : 'transparent',
               }}
             >
-              <Ionicons name={iconName} size={22} color={color} />
+              <Ionicons name={iconName} size={21} color={color} />
             </View>
           );
         },
         tabBarLabelStyle: {
           fontFamily: 'Poppins-Medium',
           fontSize: 10,
-          marginTop: -5,
+          marginTop: 1,
+          paddingBottom: 0,
         },
       })}
     >

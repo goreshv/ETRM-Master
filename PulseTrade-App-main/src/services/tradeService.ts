@@ -7,7 +7,7 @@ const TRADES_STORAGE_KEY = '@pulsetrade_local_trades';
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 12000,
+  timeout: 5000,
 });
 
 export interface Trade {
@@ -23,10 +23,14 @@ export interface Trade {
   status?: 'CAPTURED' | 'APPROVED' | 'SCHEDULED' | 'ACTUALIZED' | 'INVOICED';
   transport_mode?: 'VESSEL' | 'TRAIN' | 'TRUCK';
   vessel_name?: string;
+  delivery_hub?: string;
   actual_quantity?: number;
   accrual_amount?: number;
+  tolerance_variance?: number;
   invoice_type?: 'AP' | 'AR';
   invoice_number?: string;
+  payment_due_date?: string;
+  is_settled?: boolean;
   created_at?: string;
   updated_at?: string;
 }
@@ -35,57 +39,62 @@ export interface Trade {
 const INITIAL_TRADES: Trade[] = [
   {
     id: 77561,
-    company: 'SHELL Energy',
-    counterparty: 'BP Trading',
+    company: 'Shell Energy North America',
+    counterparty: 'BP Energy Trading',
     product: 'GAS',
-    start_date: '2026-03-09',
-    end_date: '2026-04-09',
-    price: 60.0,
-    quantity: 1000.0,
+    start_date: '2026-03-01',
+    end_date: '2026-03-31',
+    price: 3.45,
+    quantity: 100000.0,
     unit: 'MMBTU',
     status: 'INVOICED',
     transport_mode: 'TRAIN',
-    vessel_name: '',
-    actual_quantity: 1000.0,
-    accrual_amount: 60000.0,
+    delivery_hub: 'Henry Hub (LA)',
+    actual_quantity: 100450.0,
+    tolerance_variance: 0.45,
+    accrual_amount: 346552.50,
     invoice_type: 'AP',
     invoice_number: 'INV-77561-291',
+    payment_due_date: '2026-04-30',
+    is_settled: true,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
   {
     id: 47870,
-    company: 'Vitol Inc',
-    counterparty: 'Trafigura Group',
+    company: 'Vitol Supply & Trading',
+    counterparty: 'Trafigura Maritime',
     product: 'OIL',
     start_date: '2026-03-10',
-    end_date: '2026-05-10',
-    price: 75.5,
+    end_date: '2026-04-10',
+    price: 76.20,
     quantity: 50000.0,
     unit: 'BBL',
     status: 'SCHEDULED',
     transport_mode: 'VESSEL',
     vessel_name: 'Pacific Voyager',
+    delivery_hub: 'Rotterdam ARA Terminal',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
   {
     id: 29401,
-    company: 'NextEra Energy',
-    counterparty: 'Constellation Energy',
+    company: 'NextEra Power Marketing',
+    counterparty: 'Constellation Energy Group',
     product: 'POWER',
     start_date: '2026-03-15',
     end_date: '2026-03-31',
-    price: 48.0,
-    quantity: 2500.0,
+    price: 46.50,
+    quantity: 5000.0,
     unit: 'MWH',
     status: 'CAPTURED',
+    delivery_hub: 'PJM Western Hub',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   }
 ];
 
-// Normalize data coming from backend (DRF returns Decimal values as strings)
+// Normalize data coming from backend
 const normalizeTrade = (item: any): Trade => ({
   ...item,
   id: Number(item.id),
@@ -96,6 +105,9 @@ const normalizeTrade = (item: any): Trade => ({
     : undefined,
   accrual_amount: item.accrual_amount != null
     ? (typeof item.accrual_amount === 'string' ? parseFloat(item.accrual_amount) || 0 : Number(item.accrual_amount) || 0)
+    : undefined,
+  tolerance_variance: item.tolerance_variance != null
+    ? (typeof item.tolerance_variance === 'string' ? parseFloat(item.tolerance_variance) || 0 : Number(item.tolerance_variance) || 0)
     : undefined,
 });
 
@@ -214,5 +226,10 @@ export const tradeService = {
     const filtered = current.filter(t => t.id !== id);
     await saveLocalTrades(filtered);
     return true;
+  },
+
+  resetDemoTrades: async (): Promise<Trade[]> => {
+    await saveLocalTrades(INITIAL_TRADES);
+    return INITIAL_TRADES;
   }
 };

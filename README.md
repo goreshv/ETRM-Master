@@ -3,6 +3,9 @@
 > **Professional Energy Trading & Risk Management (ETRM) Learning & Simulation Platform**  
 > Complete with interactive learning curricula, progressive quiz unlocking, simulated market analytics, and an enterprise trading backend.
 
+> [!NOTE]
+> **AI-Generated Content Notice:** All curriculum modules, market scenarios, trade simulation records, and quiz questions in this application are 100% AI-generated for educational and simulation training purposes. No proprietary, confidential, or internal organisation data has been used.
+
 [![React Native](https://img.shields.io/badge/React%20Native-0.81-blue.svg)](https://reactnative.dev/)
 [![Expo SDK](https://img.shields.io/badge/Expo-SDK%2057-black.svg)](https://expo.dev/)
 [![Django](https://img.shields.io/badge/Django-Backend-green.svg)](https://www.djangoproject.com/)

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ScrollView, StatusBar, Platform } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 interface ScreenContainerProps {
   children: React.ReactNode;
@@ -21,7 +22,7 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+      <StatusBar style="dark" />
       {scrollable ? (
         <ScrollView 
           className="flex-1" 

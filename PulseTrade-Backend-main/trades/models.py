@@ -64,3 +64,52 @@ class Trade(models.Model):
 
     def __str__(self):
         return f"{self.product} Trade: {self.company} vs {self.counterparty}"
+
+
+class AppUser(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, blank=True, default='Learner')
+    device_id = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_active = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} ({self.role})"
+
+
+class CommunityConcept(models.Model):
+    CATEGORY_CHOICES = [
+        ('Foundations', 'Foundations'),
+        ('Oil', 'Oil'),
+        ('Natural Gas', 'Natural Gas'),
+        ('LNG', 'LNG'),
+        ('Power', 'Power'),
+        ('Master Data', 'Master Data'),
+        ('Risk,Valuations & PnL', 'Risk,Valuations & PnL'),
+        ('Physical Markets', 'Physical Markets'),
+        ('Credit,Risk Limits', 'Credit,Risk Limits'),
+        ('Post Trade & Settlement', 'Post Trade & Settlement'),
+        ('Operations', 'Operations'),
+        ('Compliance', 'Compliance'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    author_name = models.CharField(max_length=255)
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    title = models.CharField(max_length=500)
+    answer = models.TextField()
+    key_takeaways = models.TextField(blank=True, null=True)
+    example = models.TextField(blank=True, null=True)
+    is_approved = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"[{self.category}] {self.title} by {self.author_name}"
