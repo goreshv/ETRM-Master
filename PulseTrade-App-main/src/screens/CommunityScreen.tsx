@@ -375,7 +375,7 @@ const CommunityScreen = () => {
   );
 
   return (
-    <ScreenContainer>
+    <ScreenContainer scrollable={false}>
       {loading ? (
         <View className="flex-1 items-center justify-center py-20">
           <ActivityIndicator size="large" color="#D97706" />
