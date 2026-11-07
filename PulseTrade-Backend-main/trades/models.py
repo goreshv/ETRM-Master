@@ -48,6 +48,7 @@ class Trade(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='CAPTURED')
     
     # Scheduling & Logistics
+    delivery_hub = models.CharField(max_length=255, null=True, blank=True)
     transport_mode = models.CharField(max_length=20, choices=TRANSPORT_CHOICES, null=True, blank=True)
     vessel_name = models.CharField(max_length=255, null=True, blank=True)
     

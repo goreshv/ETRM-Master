@@ -36,7 +36,7 @@ export const convertConceptToTopic = (concept: CommunityConcept): LearningTopic 
     id: `comm_${concept.id || Math.floor(Math.random() * 100000)}`,
     title: concept.title,
     category: concept.category,
-    order: 9999 + Number(concept.id || 0),
+    order: -Number(concept.id || 1), // Appear right at the top of the learning stream
     author_name: concept.author_name,
     is_community: true,
     summary: concept.answer.length > 160 ? `${concept.answer.slice(0, 160)}...` : concept.answer,
