@@ -7,8 +7,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
 import LearningScreen from '../screens/LearningScreen';
+import CommunityScreen from '../screens/CommunityScreen';
 import SimulatorScreen from '../screens/SimulatorScreen';
-import RoadmapScreen from '../screens/RoadmapScreen';
 import QuizScreen from '../screens/QuizScreen';
 
 const Tab = createBottomTabNavigator();
@@ -59,10 +59,10 @@ const BottomTabNavigator = () => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Learn') {
             iconName = focused ? 'book' : 'book-outline';
+          } else if (route.name === 'Community') {
+            iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'Simulator') {
             iconName = focused ? 'rocket' : 'rocket-outline';
-          } else if (route.name === 'Roadmap') {
-            iconName = focused ? 'map' : 'map-outline';
           } else if (route.name === 'Quiz') {
             iconName = focused ? 'help-circle' : 'help-circle-outline';
           }
@@ -92,8 +92,8 @@ const BottomTabNavigator = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Learn" component={LearningScreen} />
+      <Tab.Screen name="Community" component={CommunityScreen} />
       <Tab.Screen name="Simulator" component={SimulatorScreen} />
-      <Tab.Screen name="Roadmap" component={RoadmapScreen} />
       <Tab.Screen name="Quiz" component={QuizScreen} />
     </Tab.Navigator>
   );

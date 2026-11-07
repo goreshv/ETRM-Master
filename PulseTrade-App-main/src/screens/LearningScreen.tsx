@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ScreenContainer from '../components/layout/ScreenContainer';
 import LearningCard from '../components/cards/LearningCard';
-import SubmitConceptModal from '../components/common/SubmitConceptModal';
 import { learningService, LearningTopic } from '../services/learningService';
 import { setTopics } from '../store/learningSlice';
 
@@ -15,7 +14,6 @@ const COMPLETED_TOPICS_KEY = '@completed_topics_list';
 
 const LEARNING_CATEGORIES = [
   'All', 
-  'Community',
   'Foundations',
   'Oil',
   'Natural Gas',
@@ -37,7 +35,6 @@ const LearningScreen = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
-  const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null);
 
@@ -79,7 +76,6 @@ const LearningScreen = () => {
   const categoryCounts = useMemo(() => {
     const counts: { [key: string]: number } = { 
       All: (topics || []).length,
-      Community: (topics || []).filter(t => t.is_community).length
     };
     (topics || []).forEach(t => {
       counts[t.category] = (counts[t.category] || 0) + 1;
@@ -91,15 +87,7 @@ const LearningScreen = () => {
     const query = searchQuery.trim().toLowerCase();
 
     return (topics || []).filter((topic: LearningTopic) => {
-      let matchesCategory = false;
-      if (activeCategory === 'All') {
-        matchesCategory = true;
-      } else if (activeCategory === 'Community') {
-        matchesCategory = Boolean(topic.is_community);
-      } else {
-        matchesCategory = topic.category === activeCategory;
-      }
-
+      const matchesCategory = activeCategory === 'All' || topic.category === activeCategory;
       if (!matchesCategory) return false;
       if (!query) return true;
 
@@ -152,14 +140,6 @@ const LearningScreen = () => {
               }}
               className="flex-row items-center"
             >
-              {cat === 'Community' && (
-                <Ionicons 
-                  name="people" 
-                  size={13} 
-                  color={isActive ? '#FFFFFF' : '#D97706'} 
-                  style={{ marginRight: 4 }} 
-                />
-              )}
               <Text className={`font-poppins-semibold text-xs ${
                 isActive ? 'text-white' : 'text-slate-600'
               }`}>
@@ -191,25 +171,15 @@ const LearningScreen = () => {
 
   return (
     <ScreenContainer scrollable={false}>
-      {/* Header with Share/Collaborate Button */}
+      {/* Header with Search Button */}
       <View className="flex-row items-center justify-between mt-2 mb-2">
         <View>
           <Text className="text-3xl font-poppins-bold text-slate-900">Learning Center</Text>
           <Text className="text-slate-400 font-poppins-medium text-xs">
-            {filteredTopics.length} Topics • {completedIds.length} Mastered ✓
+            {filteredTopics.length} Curriculum Topics • {completedIds.length} Mastered ✓
           </Text>
         </View>
         <View className="flex-row items-center space-x-2">
-          {/* Collaborate / Share Concept Button */}
-          <TouchableOpacity
-            onPress={() => setShowSubmitModal(true)}
-            className="h-10 px-3 bg-amber-500 rounded-2xl flex-row items-center justify-center mr-2 shadow-sm shadow-amber-500/30"
-            accessibilityLabel="Submit Topic / Q&A"
-          >
-            <Ionicons name="add-circle-outline" size={18} color="white" />
-            <Text className="text-white font-poppins-bold text-xs ml-1.5">Share Q&A</Text>
-          </TouchableOpacity>
-
           {/* Search Toggle Button */}
           <TouchableOpacity 
             onPress={() => {
@@ -284,23 +254,14 @@ const LearningScreen = () => {
               {searchQuery ? `No matching topics for "${searchQuery}"` : 'Be the first to share a concept or Q&A in this section!'}
             </Text>
             <TouchableOpacity
-              onPress={() => setShowSubmitModal(true)}
-              className="mt-4 px-4 py-2.5 bg-amber-500 rounded-xl flex-row items-center"
+              onPress={() => navigation.navigate('Community')}
+              className="mt-4 px-4 py-2.5 bg-primary rounded-xl flex-row items-center"
             >
-              <Ionicons name="add-circle" size={16} color="white" />
-              <Text className="text-white font-poppins-bold text-xs ml-1.5">Share First Q&A</Text>
+              <Ionicons name="people" size={16} color="white" />
+              <Text className="text-white font-poppins-bold text-xs ml-1.5">Explore Community Q&A</Text>
             </TouchableOpacity>
           </View>
         )}
-      />
-
-      {/* Community Concept Submission Modal */}
-      <SubmitConceptModal
-        visible={showSubmitModal}
-        onClose={() => setShowSubmitModal(false)}
-        onConceptSubmitted={() => {
-          loadTopicsAndProgress();
-        }}
       />
     </ScreenContainer>
   );

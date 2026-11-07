@@ -7986,15 +7986,9 @@ export const mockTopics: LearningTopic[] = [
 import { communityService, convertConceptToTopic } from './communityService';
 
 export const learningService = {
+  // Official curriculum topics (unmixed, pure learning content)
   getTopics: async (): Promise<LearningTopic[]> => {
-    try {
-      const communityList = await communityService.getConcepts();
-      const communityTopics = communityList.map(convertConceptToTopic);
-      // Put community topics and hardcoded topics together
-      return [...communityTopics, ...mockTopics].sort((a, b) => a.order - b.order);
-    } catch (e) {
-      return [...mockTopics].sort((a, b) => a.order - b.order);
-    }
+    return [...mockTopics].sort((a, b) => a.order - b.order);
   },
 
   getTopicDetail: async (id: string): Promise<LearningTopic | undefined> => {

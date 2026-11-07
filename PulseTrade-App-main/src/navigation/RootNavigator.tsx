@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from '../screens/SplashScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import LearningDetailScreen from '../screens/LearningDetailScreen';
+import RoadmapScreen from '../screens/RoadmapScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ const RootNavigator = () => {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
         <Stack.Screen name="LearningDetail" component={LearningDetailScreen} />
+        <Stack.Screen name="Roadmap" component={RoadmapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -221,7 +221,7 @@ const HomeScreen = () => {
 
   const renderCommunityCTA = () => (
     <TouchableOpacity 
-      onPress={() => setShowSubmitModal(true)}
+      onPress={() => navigation.navigate('Community')}
       activeOpacity={0.88}
       className="bg-amber-500/10 border border-amber-200 p-4 rounded-3xl mb-5 flex-row items-center justify-between"
     >
@@ -230,14 +230,37 @@ const HomeScreen = () => {
           <Ionicons name="people" size={22} color="white" />
         </View>
         <View className="ml-3 flex-1">
-          <Text className="text-slate-900 font-poppins-bold text-sm">Collaborate & Share Q&A</Text>
+          <Text className="text-slate-900 font-poppins-bold text-sm">ETRM Community Q&A</Text>
           <Text className="text-slate-600 font-poppins-medium text-xs" numberOfLines={1}>
-            Submit your concept or question with your author name!
+            Explore peer questions, real scenarios & share your knowledge
           </Text>
         </View>
       </View>
       <View className="bg-amber-500 px-3 py-1.5 rounded-xl">
-        <Text className="text-white font-poppins-bold text-xs">+ Submit</Text>
+        <Text className="text-white font-poppins-bold text-xs">Open ➔</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderRoadmapCTA = () => (
+    <TouchableOpacity 
+      onPress={() => navigation.navigate('Roadmap')}
+      activeOpacity={0.88}
+      className="bg-indigo-50 border border-indigo-100 p-4 rounded-3xl mb-5 flex-row items-center justify-between"
+    >
+      <View className="flex-row items-center flex-1 mr-3">
+        <View className="w-11 h-11 bg-indigo-600 rounded-2xl items-center justify-center shadow-sm">
+          <Ionicons name="map" size={22} color="white" />
+        </View>
+        <View className="ml-3 flex-1">
+          <Text className="text-slate-900 font-poppins-bold text-sm">ETRM Career Roadmap</Text>
+          <Text className="text-slate-600 font-poppins-medium text-xs" numberOfLines={1}>
+            Front, Middle & Back Office practitioner guide
+          </Text>
+        </View>
+      </View>
+      <View className="bg-indigo-600 px-3 py-1.5 rounded-xl">
+        <Text className="text-white font-poppins-bold text-xs">Explore ➔</Text>
       </View>
     </TouchableOpacity>
   );
@@ -297,6 +320,7 @@ const HomeScreen = () => {
           {renderProgressOverview()}
           {renderSimulatorCTA()}
           {renderCommunityCTA()}
+          {renderRoadmapCTA()}
           {renderQuickPills()}
 
           {/* Featured Learning Section */}
