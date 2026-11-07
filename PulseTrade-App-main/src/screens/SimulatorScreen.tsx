@@ -327,12 +327,20 @@ const SimulatorScreen = () => {
 
   const handleResetDemoBook = () => {
     Alert.alert(
-      'Reset Trading Book',
-      'This will restore the standard demonstration deals across Oil, Natural Gas, and Electricity.',
+      'Manage Trading Blotter',
+      'Choose whether to clear all deals completely or restore demonstration deals across commodities.',
       [
         { text: 'Cancel', style: 'cancel' },
         { 
-          text: 'Reset Portfolio', 
+          text: 'Clear All Deals', 
+          style: 'destructive',
+          onPress: async () => {
+            await tradeService.clearAllTrades();
+            loadTrades(false);
+          }
+        },
+        { 
+          text: 'Restore Demo Deals', 
           onPress: async () => {
             await tradeService.resetDemoTrades();
             loadTrades(false);

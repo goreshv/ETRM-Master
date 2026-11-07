@@ -114,15 +114,17 @@ const normalizeTrade = (item: any): Trade => ({
 const getLocalTrades = async (): Promise<Trade[]> => {
   try {
     const raw = await AsyncStorage.getItem(TRADES_STORAGE_KEY);
-    if (raw) {
+    if (raw !== null) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed.map(normalizeTrade);
       }
     }
   } catch (e) {
     console.warn('Error reading local trades:', e);
   }
+  // Only first launch when storage has never been initialized
+  await saveLocalTrades(INITIAL_TRADES);
   return INITIAL_TRADES;
 };
 
@@ -138,10 +140,12 @@ export const tradeService = {
   getTrades: async (): Promise<Trade[]> => {
     try {
       const response = await api.get('');
-      if (Array.isArray(response.data) && response.data.length > 0) {
-        const normalized = response.data.map(normalizeTrade);
-        await saveLocalTrades(normalized);
-        return normalized;
+      if (Array.isArray(response.data)) {
+        if (response.data.length > 0) {
+          const normalized = response.data.map(normalizeTrade);
+          await saveLocalTrades(normalized);
+          return normalized;
+        }
       }
     } catch (error: any) {
       console.log('Backend request fell back to local storage:', error?.message || error);
@@ -231,5 +235,17 @@ export const tradeService = {
   resetDemoTrades: async (): Promise<Trade[]> => {
     await saveLocalTrades(INITIAL_TRADES);
     return INITIAL_TRADES;
+  },
+
+  clearAllTrades: async (): Promise<void> => {
+    try {
+      const current = await getLocalTrades();
+      for (const t of current) {
+        if (t.id) {
+          api.delete(`${t.id}/`).catch(() => {});
+        }
+      }
+    } catch (_) {}
+    await saveLocalTrades([]);
   }
 };
