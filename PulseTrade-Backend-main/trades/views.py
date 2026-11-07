@@ -1,8 +1,8 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .models import Trade, AppUser, CommunityConcept
-from .serializers import TradeSerializer, AppUserSerializer, CommunityConceptSerializer
+from .models import Trade, AppUser, CommunityConcept, VideoTutorial
+from .serializers import TradeSerializer, AppUserSerializer, CommunityConceptSerializer, VideoTutorialSerializer
 
 class TradeViewSet(viewsets.ModelViewSet):
     queryset = Trade.objects.all().order_by('-created_at')
@@ -51,4 +51,13 @@ class CommunityConceptViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve', 'create']:
             return [permissions.AllowAny()]
         # Only admin/backend staff can delete or modify submitted concepts
+        return [permissions.IsAdminUser()]
+
+class VideoTutorialViewSet(viewsets.ModelViewSet):
+    queryset = VideoTutorial.objects.all().order_by('order', '-created_at')
+    serializer_class = VideoTutorialSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]

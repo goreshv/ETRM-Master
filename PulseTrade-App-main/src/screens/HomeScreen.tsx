@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert, Image, Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,6 +17,7 @@ import SubmitConceptModal from '../components/common/SubmitConceptModal';
 
 import { learningService, LearningTopic } from '../services/learningService';
 import { userService, UserProfile } from '../services/userService';
+import { videoService, VideoTutorial } from '../services/videoService';
 import { setTopics } from '../store/learningSlice';
 
 const COMPLETED_TOPICS_KEY = '@completed_topics_list';
@@ -27,6 +28,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [featuredVideos, setFeaturedVideos] = useState<VideoTutorial[]>([]);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
@@ -36,11 +38,16 @@ const HomeScreen = () => {
   const loadData = async (showSpinner = false) => {
     if (showSpinner) setLoading(true);
     try {
-      const [topicsData, completedRaw, localUser] = await Promise.all([
+      const [topicsData, completedRaw, localUser, videos] = await Promise.all([
         learningService.getTopics(),
         AsyncStorage.getItem(COMPLETED_TOPICS_KEY),
         userService.getLocalUser(),
+        videoService.getFeaturedHomeVideos(),
       ]);
+
+      if (videos && videos.length > 0) {
+        setFeaturedVideos(videos);
+      }
 
       if (topicsData) {
         dispatch(setTopics(topicsData));
@@ -300,6 +307,112 @@ const HomeScreen = () => {
     );
   };
 
+  const renderVideoSection = () => {
+    return (
+      <View className="mb-6">
+        <View className="flex-row justify-between items-center mb-3">
+          <View className="flex-row items-center">
+            <Ionicons name="logo-youtube" size={20} color="#EF4444" />
+            <Text className="text-slate-900 font-poppins-bold text-base ml-2">Video Masterclasses</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('VideoHub')}>
+            <Text className="text-red-600 font-poppins-semibold text-xs">All Courses (5) ➔</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Channel Collab Pill */}
+        <TouchableOpacity
+          onPress={() => Linking.openURL('https://www.youtube.com/@TheETRMInsider')}
+          activeOpacity={0.88}
+          className="bg-slate-900 px-3.5 py-2.5 rounded-2xl flex-row items-center justify-between mb-3 shadow-sm"
+        >
+          <View className="flex-row items-center flex-1 mr-2">
+            <View className="w-7 h-7 rounded-full bg-red-600 items-center justify-center">
+              <Ionicons name="play" size={13} color="white" />
+            </View>
+            <View className="ml-2.5 flex-1">
+              <View className="flex-row items-center">
+                <Text className="text-white font-poppins-bold text-xs">The ETRM Insider</Text>
+                <Ionicons name="checkmark-circle" size={13} color="#38BDF8" style={{ marginLeft: 3 }} />
+              </View>
+              <Text className="text-slate-400 font-poppins-regular text-[10px]">
+                By Srinivasa Reddy Mudiyala • Industry Delivery Head
+              </Text>
+            </View>
+          </View>
+          <View className="bg-red-600 px-2.5 py-1 rounded-lg flex-row items-center">
+            <Ionicons name="logo-youtube" size={11} color="white" />
+            <Text className="text-white font-poppins-bold text-[10px] ml-1">Subscribe 🔔</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* 2 Featured Masterclass Videos */}
+        {featuredVideos.map((video) => (
+          <TouchableOpacity
+            key={video.id}
+            onPress={() => Linking.openURL(video.url)}
+            activeOpacity={0.9}
+            className="bg-white rounded-2xl overflow-hidden mb-3 border border-slate-200 shadow-sm flex-row"
+            style={{ height: 106 }}
+          >
+            {/* Thumbnail */}
+            <View className="w-36 h-full relative bg-slate-900 justify-center items-center">
+              <Image
+                source={{ uri: video.thumbnail_url || 'https://img.youtube.com/vi/KGHCXkJW8dU/hqdefault.jpg' }}
+                className="w-full h-full"
+                resizeMode="cover"
+              />
+              <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.65)']}
+                className="absolute inset-0"
+              />
+              <View className="w-9 h-9 rounded-full bg-red-600/90 items-center justify-center border border-white/40 shadow-sm">
+                <Ionicons name="play" size={16} color="white" style={{ marginLeft: 2 }} />
+              </View>
+            </View>
+
+            {/* Info */}
+            <View className="flex-1 p-2.5 justify-between">
+              <View>
+                <View className="flex-row items-center justify-between mb-0.5">
+                  <View className="bg-red-50 px-1.5 py-0.5 rounded">
+                    <Text className="text-red-700 font-poppins-bold text-[8px] uppercase tracking-wider">
+                      {video.category}
+                    </Text>
+                  </View>
+                  <Text className="text-slate-400 font-poppins-medium text-[9px]">YouTube</Text>
+                </View>
+                <Text className="text-slate-900 font-poppins-bold text-xs leading-4" numberOfLines={2}>
+                  {video.title}
+                </Text>
+              </View>
+
+              <View className="flex-row items-center justify-between pt-1 border-t border-slate-100">
+                <Text className="text-slate-400 font-poppins-regular text-[10px]">Watch on YouTube</Text>
+                <Text className="text-red-600 font-poppins-bold text-[11px]">Play ▶</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+
+        {/* Video Courses & Playlists Link Card */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('VideoHub')}
+          activeOpacity={0.88}
+          className="bg-red-50 border border-red-200 p-3 rounded-2xl flex-row items-center justify-between"
+        >
+          <View className="flex-row items-center flex-1 mr-2">
+            <Ionicons name="albums-outline" size={18} color="#DC2626" />
+            <Text className="text-slate-800 font-poppins-medium text-xs ml-2">
+              Full Playlists: Endur, RightAngle & ETRM Basics
+            </Text>
+          </View>
+          <Text className="text-red-600 font-poppins-bold text-xs">Browse All ➔</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const renderSkeleton = () => (
     <View>
       <SkeletonLoader height={70} borderRadius={20} style={{ marginBottom: 16 }} />
@@ -322,6 +435,7 @@ const HomeScreen = () => {
           {renderCommunityCTA()}
           {renderRoadmapCTA()}
           {renderQuickPills()}
+          {renderVideoSection()}
 
           {/* Featured Learning Section */}
           <SectionHeader title="📚 Featured Modules" onSeeAll={() => navigation.navigate('Learn')} />

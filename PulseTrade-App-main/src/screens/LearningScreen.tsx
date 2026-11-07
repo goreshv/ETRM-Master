@@ -179,7 +179,16 @@ const LearningScreen = () => {
             {filteredTopics.length} Curriculum Topics • {completedIds.length} Mastered ✓
           </Text>
         </View>
-        <View className="flex-row items-center space-x-2">
+        <View className="flex-row items-center">
+          {/* Video Lessons Shortcut */}
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('VideoHub')}
+            className="w-10 h-10 rounded-2xl bg-red-50 border border-red-200 items-center justify-center mr-2 shadow-sm"
+            accessibilityLabel="Video Masterclasses"
+          >
+            <Ionicons name="logo-youtube" size={18} color="#EF4444" />
+          </TouchableOpacity>
+
           {/* Search Toggle Button */}
           <TouchableOpacity 
             onPress={() => {

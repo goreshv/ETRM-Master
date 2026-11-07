@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Trade, AppUser, CommunityConcept
+from .models import Trade, AppUser, CommunityConcept, VideoTutorial
+
+@admin.register(VideoTutorial)
+class VideoTutorialAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content_type', 'category', 'channel_name', 'is_featured_home', 'order', 'created_at')
+    list_filter = ('content_type', 'category', 'is_featured_home', 'channel_name')
+    search_fields = ('title', 'summary', 'url', 'channel_name')
+    list_editable = ('order', 'is_featured_home')
 
 @admin.register(CommunityConcept)
 class CommunityConceptAdmin(admin.ModelAdmin):

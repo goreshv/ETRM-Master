@@ -114,3 +114,33 @@ class CommunityConcept(models.Model):
 
     def __str__(self):
         return f"[{self.category}] {self.title} by {self.author_name}"
+
+
+class VideoTutorial(models.Model):
+    CONTENT_TYPE_CHOICES = [
+        ('VIDEO', 'Single Video'),
+        ('PLAYLIST', 'Full Course Playlist'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=500)
+    category = models.CharField(max_length=100, default='Foundations')
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES, default='VIDEO')
+    url = models.URLField(max_length=500)
+    video_id = models.CharField(max_length=50, blank=True, null=True)
+    thumbnail_url = models.URLField(max_length=500, blank=True, null=True)
+    channel_name = models.CharField(max_length=255, default='The ETRM Insider')
+    channel_url = models.URLField(max_length=500, default='https://www.youtube.com/@TheETRMInsider')
+    summary = models.TextField(blank=True, null=True)
+    duration = models.CharField(max_length=50, blank=True, null=True)
+    is_featured_home = models.BooleanField(default=False)
+    order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', '-created_at']
+
+    def __str__(self):
+        return f"[{self.content_type}] {self.title}"
+
