@@ -17,16 +17,23 @@ class AppUserViewSet(viewsets.ModelViewSet):
         name = request.data.get('name', '').strip()
         role = request.data.get('role', 'Learner').strip()
 
+        # Idempotent match: find existing by device_id or case-insensitive name
+        user = None
         if device_id:
             user = AppUser.objects.filter(device_id=device_id).first()
-            if user:
-                if name:
-                    user.name = name
-                if role:
-                    user.role = role
-                user.save()
-                serializer = self.get_serializer(user)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+        if not user and name:
+            user = AppUser.objects.filter(name__iexact=name).first()
+
+        if user:
+            if name:
+                user.name = name
+            if role:
+                user.role = role
+            if device_id and not user.device_id:
+                user.device_id = device_id
+            user.save()
+            serializer = self.get_serializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         return super().create(request, *args, **kwargs)
 

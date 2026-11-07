@@ -46,8 +46,12 @@ const HomeScreen = () => {
         dispatch(setTopics(topicsData));
       }
 
-      if (localUser) {
+      if (localUser && localUser.name && localUser.name.trim()) {
         setUserProfile(localUser);
+        // Ensure the user record is kept active/created in the backend in case Render restarted
+        userService.syncUserWithBackend(localUser).then(updated => {
+          if (updated?.id) setUserProfile(updated);
+        }).catch(() => {});
       } else {
         // Trigger onboarding to capture user's name on start
         setShowOnboarding(true);

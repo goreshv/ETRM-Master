@@ -7,7 +7,7 @@ const BASE_URL = 'https://etrm-master-backend.onrender.com/api/concepts/';
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 6000,
+  timeout: 30000,
 });
 
 export interface CommunityConcept {
